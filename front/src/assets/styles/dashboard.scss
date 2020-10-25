@@ -1,0 +1,135 @@
+.dashboard{
+  width: 85%;
+  margin-top: 1rem;
+  height: 625px;
+}
+
+.dashboard-main{
+  height: 85%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.dashboard-column {
+  border-radius: 1rem;
+  padding: 0.6em;
+  background-color: $primary;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.dashboard-column-titles{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  .dashboard-column-title{
+    font-family: "Raleway", "cursive";
+    color: $text-color;
+    font-size: 1.6rem;
+  }
+  .title-left{
+    width: 35%;
+  }
+  .title-right{
+    width: 60%;
+  }
+  .title-3{
+    width: 30%;
+  }
+}
+
+.dashboard-column-left {
+  width: 35%;
+}
+
+.dashboard-column-right {
+  width: 60%;
+}
+
+.dashboard-button{
+  cursor: pointer;
+  width: 180px;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 180px;
+  background-color: $bars;
+  .dashboard-button-text{
+    font-family: "Raleway", "cursive";
+    color: $text-color;
+    font-size: 1.3rem;
+  }
+  .dashboard-button-image{
+    width: 70px;
+    height: 70px;
+  }
+  &:hover{
+    box-shadow: 0px 0px 5px #F5F5F5;
+  }
+}
+
+.dashboard-analytics{
+  padding: 0.4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 1rem;
+  width: 35%;
+  height: 180px;
+  background-color: $bars;
+  .dashboard-analytics-text{
+    font-family: "Raleway", "cursive";
+    color: $text-color;
+    font-size: 1.3rem;
+  }
+}
+
+.analytics-bar{
+  width: 90%;
+  height: 250px;
+}
+
+//user management system
+.user-column{
+  width: 30%;
+}
+
+.user-card{
+  padding: 0.4em;
+  border-radius: 1rem;
+  background-color: $bars;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+  .user-card-photo{
+    width: 55px;
+    height: 55px;
+  }
+  .user-card-texts{
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .user-card-text{
+      font-size: 1.3rem;
+    }
+  }
+  .manage-action-box{
+    width: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+}

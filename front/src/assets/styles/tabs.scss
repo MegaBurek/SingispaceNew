@@ -1,0 +1,81 @@
+.tab-title {
+  color: whitesmoke;
+  font-family: "Raleway", "cursive";
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.tab-list {
+  margin-bottom: 0;
+  overflow: auto;
+  padding: 0;
+  height: 250px;
+  border-radius: 1rem;
+  background-color: $primary;
+  scrollbar-width: thin;
+}
+
+.tab-item {
+  cursor: pointer;
+  width: 95%;
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+  background-color: $bars;
+  margin-bottom: 0.3rem;
+  border-radius: 1.5rem 1rem 1rem 1.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+
+  align-items: center;
+}
+
+.tab-image-box {
+  top: 0;
+  left: 0;
+  text-align: center;
+  width: 25%;
+  height: 100%;
+}
+
+.tab-message{
+  padding: 0.8em;
+  color: $text-color;
+  font-family: "Raleway", "cursive";
+  font-size: 1rem;
+}
+
+.name-label {
+  color: $text-color;
+  font-family: "Raleway", "cursive";
+  margin-bottom: 0;
+  margin-left: 5px;
+}
+
+.tab-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: fill;
+}
+
+.tab-link {
+  width: 75%;
+  display: block;
+  color: whitesmoke;
+  text-decoration: none;
+  margin-left: 0.5rem;
+  color: $text-color;
+}
+
+.tab-feed{
+  overflow-y: auto;
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  border-radius: 1rem;
+}
+
+.tab-item:hover {
+  background-color: $primary;
+  box-shadow: 0px 0px 5px #F5F5F5;
+}

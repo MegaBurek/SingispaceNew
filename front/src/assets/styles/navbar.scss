@@ -1,0 +1,139 @@
+@import './breakpoints.scss';
+
+.brand-box {
+  color: $text-color;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 30%;
+}
+
+.navbar{
+  background-color: $bars;
+  box-shadow: 0px 0px 5px #F5F5F5;
+}
+
+.dropdown-menu{
+  background-color: $bars;
+  box-shadow: 0px 0px 5px #F5F5F5;
+  min-width: 15rem;
+  .dropdown-divider{
+    border-top: 1px solid #c4c4c4
+  }
+}
+
+.dropdown-toggle::after {
+  display: none;
+}
+
+.navbar-toggler{
+  width: 15%;
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(245, 245, 245)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+  .navbar-toggler-icon:hover{
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(245, 245, 245, 0.8)' stroke-width='3' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+}
+
+.navbar-collapse{
+  width: 30%;
+  flex-grow: 0;
+}
+
+.nav-links{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-link {
+  font-family: "Raleway", sans-serif;
+  color: $text-color;
+  border-radius: 1rem;
+  width: 95%;
+  &:hover{
+    background-color: $primary;
+  }
+}
+
+a:not([href]) {
+  cursor: pointer;
+  color: $text-color;
+  &:hover{
+    color: #007bff;
+  }
+}
+
+.nav-item-word{
+  font-family: "Raleway", sans-serif;
+  color: $text-color;
+  border-radius: 1rem;
+  &:hover{
+    background-color: $primary;
+  }
+}
+
+
+.navbar-brand {
+  font-family: "Patua One", cursive;
+  margin: 0px 0px 0px 2px;
+  font-size: 2rem;
+}
+
+.nav-item {
+  width: 40px;
+  height: 40px;
+  border-radius: 1rem;
+}
+
+.navbar-expand-md .navbar-nav {
+	justify-content: flex-end;
+}
+
+.nav-icon{
+  width: 25px;
+  height: 25px;
+}
+
+.small-logo {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.dropdown-header{
+  font-family: "Raleway", "cursive";
+  color: $text-color;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-link {
+  text-align: center;
+}
+
+.navigation-menu{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 30%;
+  height: 58px;
+}
+.nav-menu-tab{
+  cursor: pointer;
+  width: 20%;
+  height: 100%;
+  display: flex;
+  border-radius: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &:hover{
+    background-color: $primary;
+  }
+}
+
+
+// @media screen and (max-width: )
