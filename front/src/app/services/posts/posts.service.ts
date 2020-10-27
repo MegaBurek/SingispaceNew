@@ -25,6 +25,10 @@ export class PostsService {
     return this.http.post<Post>(this.baseUrl + `/page` + `/${id}`, post);
   }
 
+  createPostToWall(id, post) {
+    return this.http.post<Post>(this.baseUrl + `/wall` + `/${id}`, post);
+  }
+
   like(id, userId) {
     return this.http.post<string>(this.baseUrl + `/like` + `/${id}`, userId);
   }

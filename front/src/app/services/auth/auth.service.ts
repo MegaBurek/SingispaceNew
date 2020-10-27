@@ -96,14 +96,21 @@ export class AuthService {
     }
   }
 
+  isStudentLogged() {
+    const role = this.getCurrentRoles();
+    if (role[0] === 'ROLE_LEARNER') {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   isTutorLogged() {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      if (decode(token).sub === 'ROLE_TUTOR') {
-        return true;
-      } else {
-        return false;
-      }
+    const role = this.getCurrentRoles();
+    if (role[0] === 'ROLE_TUTOR') {
+      return true;
+    } else {
+      return false;
     }
   }
 

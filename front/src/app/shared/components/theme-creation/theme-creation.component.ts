@@ -6,9 +6,9 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth/auth.service';
 import {ModalService} from '../../../_modal';
 import {ImgService} from '../../../services/img.service';
-import {CreatePage} from '../../../store/user-store/page.actions';
+import {CreatePage, GetUserPageSubs} from '../../../store/user-store/page.actions';
 import {ThemesService} from '../../../services/themes/themes.service';
-import {CreateTheme} from '../../../store/user-store/theme.action';
+import {CreateTheme, GetUserThemeSubs} from '../../../store/user-store/theme.action';
 
 @Component({
   selector: 'app-theme-creation',
@@ -72,7 +72,10 @@ export class ThemeCreationComponent implements OnInit {
       const newFile = new File([blob], uniqueName);
       this.imgService.uploadThemePhoto(newFile).subscribe(
         imgUrl => {
+          // @ts-ignore
+          this.theme.members.push(this.theme.owner);
           this.theme.imgUrl = imgUrl.toString();
+          this.store.dispatch(new GetUserThemeSubs(this.theme.owner));
           this.store.dispatch(new CreateTheme(this.theme));
           this.notify.showSuccess('Successfully created theme', 'Notification');
           this.router.navigate(['/my-themes']);

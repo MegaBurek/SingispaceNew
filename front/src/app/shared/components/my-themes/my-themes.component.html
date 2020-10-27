@@ -7,7 +7,7 @@
     <!--    </div>-->
 
     <div class="dashboard-column my-social-groups">
-      <div class="social-group-box" *ngFor="let theme of ownedThemes | async" (click)="toTheme(theme.name)">
+      <div class="social-group-box" *ngFor="let theme of ownedThemes | async" routerLink="/theme/{{theme.id}}">
         <img [src]="theme.imgUrl" class="img-responsive social-groups-image">
         <h3 class="social-groups-text text-center">{{theme.name}}</h3>
       </div>

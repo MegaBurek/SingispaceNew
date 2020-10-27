@@ -3,7 +3,7 @@ import {Page} from '../../../model/page';
 import {NotificaitionService} from '../../../services/notificaition.service';
 import {Store} from '@ngxs/store';
 import {Router} from '@angular/router';
-import {CreatePage} from '../../../store/user-store/page.actions';
+import {CreatePage, GetUserPageSubs} from '../../../store/user-store/page.actions';
 import {AuthService} from '../../../services/auth/auth.service';
 import {error} from 'util';
 import {ModalService} from '../../../_modal';
@@ -67,7 +67,7 @@ export class PageCreationComponent implements OnInit {
       this.notify.showError('Please upload an image', 'Notification');
     } else {
       this.page.owner = this.authService.getCurrentUserID();
-      for(let i = 0; i < this.userSelects.length; i++) {
+      for (let i = 0; i < this.userSelects.length; i++) {
         this.page.categories.push(this.userSelects[i].name);
       }
       const selectedFileName = this.selectedFile.name;
@@ -76,8 +76,11 @@ export class PageCreationComponent implements OnInit {
       const newFile = new File([blob], uniqueName);
       this.imgService.uploadPagePhoto(newFile).subscribe(
         imgUrl => {
+          // @ts-ignore
+          this.page.members.push(this.page.owner);
           this.page.imgUrl = imgUrl.toString();
           this.store.dispatch(new CreatePage(this.page));
+          this.store.dispatch(new GetUserPageSubs(this.page.owner));
           this.notify.showSuccess('Successfully created page', 'Notification');
           this.router.navigate(['/my-pages']);
         }, error1 => {

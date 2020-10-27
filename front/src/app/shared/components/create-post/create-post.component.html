@@ -3,28 +3,21 @@
   <div class="card">
     <div class="card-body">
       <h5 class="card-title text-center">Create Post</h5>
-<!--      <form class="form-signin">-->
-<!--        <div class="input-container">-->
-<!--          <label class="input-label">Name</label>-->
-<!--          <div class="form-label-group">-->
-<!--            <input class="form-control form-control-lg" name="name" [(ngModel)]="theme.name" type="text" required>-->
-<!--          </div>-->
-<!--          <label class="input-label">Category</label>-->
-<!--          <div class="form-label-group" style="margin: 0">-->
-<!--            <div class="autocomplete">-->
-<!--              <div class="autocomplete-items">-->
-<!--                <div *ngFor="let category of categories" class="suggestion" [ngClass]="isSelected(category) ? 'selected-suggestion' : ''" (click)="selectSuggestion(category)">{{ category.name }}</div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <label class="input-label">Description</label>-->
-<!--          <div class="form-label-group">-->
-<!--            <textarea class="form-control form-control-lg" name="desc" [(ngModel)]="theme.desc" type="text" required></textarea>-->
-<!--          </div>-->
-<!--        </div>-->
+      <form class="form-signin">
+        <div class="input-container">
+          <label class="input-label">Name</label>
+          <div class="form-label-group">
+            <input class="form-control form-control-lg" name="name" [(ngModel)]="page.name" type="text" required>
+          </div>
+          <label class="input-label">Description</label>
+          <div class="form-label-group">
+            <textarea class="form-control form-control-lg" name="desc" [(ngModel)]="page.desc" type="text"
+                      required></textarea>
+          </div>
+        </div>
 
-<!--        <button class="btn btn-lg btn-block text-uppercase" type="submit" *ngIf="checkIfEmpty()" (click)="openThemeCompletion('theme-completion')">Create</button>-->
-<!--      </form>-->
+        <button class="btn btn-lg btn-block text-uppercase" type="submit" *ngIf="checkIfEmpty()" (click)="openPageCompletion('page-completion')">Continue</button>
+      </form>
     </div>
   </div>
 </div>

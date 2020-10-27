@@ -105,7 +105,7 @@ export class CreateTutorComponent implements OnInit {
           this.userAccService.registerTutor(this.user).subscribe(user => {
             console.log(user);
           });
-          this.notify.showSuccess('You have successfully created an admin', 'Notification');
+          this.notify.showSuccess('You have successfully created a tutor', 'Notification');
         }, error => {
           console.log(error);
           this.selectedFile = undefined;
