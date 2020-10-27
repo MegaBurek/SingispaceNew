@@ -57,12 +57,12 @@ public class PostService {
         return posts;
     }
 
-    public Iterable<Post> getPageFeed(String name) {
+    public Iterable<Post> getPageFeed(String id) {
         List<String> postIds;
         List<Post> posts = new ArrayList();
         Post post;
 
-        Optional<Page> selectedPage = pagesRepository.findByName(name);
+        Optional<Page> selectedPage = pagesRepository.findById(id);
         postIds = selectedPage.get().getFeed();
         for (String postId : postIds) {
             post = getById(postId).get();

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import singispace.domain.Post;
+import singispace.domain.Subscription;
 import singispace.domain.Theme;
 import singispace.repositories.ThemesRepository;
 import singispace.service.PostService;
@@ -54,10 +55,14 @@ public class ThemeController {
         return new ResponseEntity<>(postService.getThemeFeed(id), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/subscribe/{name}")
-    public ResponseEntity<String> subscribeToTheme(@PathVariable String name, @RequestBody String id) {
-        subscriptionService.subscribeToTheme(id, name);
-        return new ResponseEntity<>("Subscribed", HttpStatus.OK);
+    @PostMapping(value= "/unsubscribe")
+    public ResponseEntity<String> unsubscribeFromTheme(@RequestBody Subscription subscription){
+        return new ResponseEntity<>(subscriptionService.unsubscribeFromTheme(subscription), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/subscribe")
+    public ResponseEntity<String> subscribeToTheme(@RequestBody Subscription subscription) {
+        return new ResponseEntity<>(subscriptionService.subscribeToTheme(subscription), HttpStatus.OK);
     }
 
     @GetMapping(value = "/owner/{id}")

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import singispace.domain.Page;
 import singispace.domain.Post;
+import singispace.domain.Subscription;
 import singispace.domain.Theme;
 import singispace.repositories.PagesRepository;
 import singispace.service.PagesService;
@@ -49,9 +50,9 @@ public class PagesController {
         return new ResponseEntity<Page>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/feed/{name}")
-    public ResponseEntity<Iterable<Post>> getThemeFeed(@PathVariable String name) {
-        return new ResponseEntity<>(postService.getPageFeed(name), HttpStatus.OK);
+    @GetMapping(value = "/feed/{id}")
+    public ResponseEntity<Iterable<Post>> getPageFeed(@PathVariable String id) {
+        return new ResponseEntity<>(postService.getPageFeed(id), HttpStatus.OK);
     }
 
     @GetMapping(value = "/owner/{id}")
@@ -59,10 +60,14 @@ public class PagesController {
         return new ResponseEntity<>(pagesService.getUserOwnedPages(id), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/subscribe/{name}")
-    public ResponseEntity<String> subscribeToPage(@PathVariable String name, @RequestBody String id) {
-        subscriptionService.subscribeToPage(id, name);
-        return new ResponseEntity<>("Subscribed", HttpStatus.OK);
+    @PostMapping(value= "/unsubscribe")
+    public ResponseEntity<String> unsubscribeFromPage(@RequestBody Subscription subscription){
+        return new ResponseEntity<>(subscriptionService.unsubscribeFromPage(subscription), HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/subscribe")
+    public ResponseEntity<String> subscribeToPage(@RequestBody Subscription subscription) {
+        return new ResponseEntity<>(subscriptionService.subscribeToPage(subscription), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/remove/{id}")
