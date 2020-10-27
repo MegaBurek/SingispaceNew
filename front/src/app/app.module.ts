@@ -14,7 +14,6 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './shared/layout/home/home.component';
-import { MainFeedComponent } from './shared/layout/main-feed/main-feed.component';
 import { PagesTabComponent } from './shared/components/pages-tab/pages-tab.component';
 import { SignInComponent } from './shared/components/sign-in/sign-in.component';
 import { RegisterComponent } from './shared/components/register/register.component';
@@ -48,7 +47,6 @@ import { CreatePostComponent } from './shared/components/create-post/create-post
   declarations: [
     AppComponent,
     HomeComponent,
-    MainFeedComponent,
     PagesTabComponent,
     SignInComponent,
     RegisterComponent,

@@ -31,8 +31,12 @@ export class ThemesService {
     return this.http.put<Theme>(this.baseUrl + `/${id}`, theme);
   }
 
-  subscribe(name) {
-    return this.http.post<string>(this.baseUrl + `/subscribe`, name);
+  subscribe(uid, id) {
+    return this.http.post(this.baseUrl + `/subscribe`, {userId: uid, socialGroupId: id}, {responseType: 'text'});
+  }
+
+  unsubscribe(uid, id) {
+    return this.http.post(this.baseUrl + `/unsubscribe`, {userId: uid, socialGroupId: id}, {responseType: 'text'});
   }
 
   getUserThemeSubs(id) {

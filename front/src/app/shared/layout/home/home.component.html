@@ -101,8 +101,8 @@
           </p>
         </div>
         <div class="d-flex justify-content-center align-items-center action-box">
-          <img src="../../../../assets/images/icons/eye.svg" class="img-responsive actions">
-          <div class="info-drop" (click)="openPost('postDetail')">
+          <img src="../../../../assets/images/icons/eye.svg" class="img-responsive actions" (click)="openPost('postDetail')">
+          <div class="info-drop">
             <p class="info-text">View</p>
           </div>
         </div>
@@ -117,4 +117,21 @@
       <groups-tab></groups-tab>
     </div>
   </div>
+  <jw-modal id="postDetail">
+    <div class="card form-card">
+      <div class="card-body">
+        <h5 class="card-title text-center">Create Post</h5>
+        <label class="input-label">Title</label>
+        <div class="form-label-group">
+          <input class="form-control" name="title" [(ngModel)]="post.title" type="text" required>
+        </div>
+        <label class="input-label">Text Content</label>
+        <div class="form-label-group">
+                  <textarea class="form-control" name="textContent" [(ngModel)]="post.textContent" type="text"
+                            required></textarea>
+        </div>
+        <button class="btn text-uppercase form-button" type="submit" (click)="closePost('postDetail')">Close</button>
+      </div>
+    </div>
+  </jw-modal>
 </div>

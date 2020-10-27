@@ -2,13 +2,11 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import decode from 'jwt-decode';
-import {Subject, BehaviorSubject, Observable} from 'rxjs';
-import {User} from 'src/app/model/user';
 import {NotificaitionService} from '../notificaition.service';
-import {GetUserOwnedPages, GetUserPageSubs} from '../../store/user-store/page.actions';
+import {GetUserPageSubs} from '../../store/user-store/page.actions';
 import {Store} from '@ngxs/store';
-import {GetUserOwnedThemes, GetUserThemeSubs} from '../../store/user-store/theme.action';
-import {GetUserFriends, SetLoggedIn} from '../../store/user-store/user.actions';
+import {GetUserThemeSubs} from '../../store/user-store/theme.action';
+import {SetLoggedIn} from '../../store/user-store/user.actions';
 import {UserAccService} from '../users/user-acc.service';
 
 
@@ -38,9 +36,9 @@ export class AuthService {
         // await this.store.dispatch(new GetUserFriends(id));
         // await this.store.dispatch(new GetUserOwnedThemes(id));
         // await this.store.dispatch(new GetUserOwnedPages(id));
-        // await this.userAccService.getCurrentUser(id).subscribe(logged => {
-        //   this.store.dispatch(new SetLoggedIn(logged));
-        // });
+        await this.userAccService.getCurrentUser(id).subscribe(logged => {
+          this.store.dispatch(new SetLoggedIn(logged));
+        });
         await this.notify.showSuccess('Successful Attempt', 'Notification');
         if (this.isAdminLogged()) {
           await this.router.navigate(['/dashboard']);
@@ -81,7 +79,7 @@ export class AuthService {
     return roles;
   }
 
-  getCurrentUserID() {
+  getCurrentUserID(): string {
     const token = localStorage.getItem('accessToken');
     if (token) {
       return decode(token).sub;

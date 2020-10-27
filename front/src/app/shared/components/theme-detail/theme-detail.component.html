@@ -23,20 +23,20 @@
           </div>
         </div>
         <div class="d-flex justify-content-center flex-row flex-wrap align-items-center">
-          <div class="d-flex justify-content-center align-items-center action-box">
+          <div class="d-flex justify-content-center align-items-center action-box" (click)="subscribeToTheme(theme.id)" *ngIf="!subscribed">
             <img src="../../../../assets/images/icons/like.svg" class="img-responsive actions">
             <div class="info-drop">
               <p class="info-text">Like</p>
             </div>
           </div>
-          <div class="d-flex justify-content-center align-items-center action-box">
-            <img src="../../../../assets/images/icons/join.svg" class="img-responsive actions">
+          <div class="d-flex justify-content-center align-items-center action-box" (click)="unsubscribeFromTheme(theme.id)" *ngIf="subscribed">
+            <img src="../../../../assets/images/icons/unlike.svg" class="img-responsive actions">
             <div class="info-drop">
-              <p class="info-text">Join</p>
+              <p class="info-text">Unsub</p>
             </div>
           </div>
           <div class="d-flex justify-content-center align-items-center action-box"
-               (click)="openCreatePage('custom-modal-1')">
+               (click)="openCreatePage('custom-modal-1')" *ngIf="subscribed">
             <img src="../../../../assets/images/icons/create.svg" class="img-responsive actions">
             <div class="info-drop">
               <p class="info-text">Post</p>
@@ -58,8 +58,8 @@
             </p>
           </div>
           <div class="d-flex justify-content-center align-items-center action-box">
-            <img src="../../../../assets/images/icons/eye.svg" class="img-responsive actions">
-            <div class="info-drop" (click)="openPost('postDetail')">
+            <img src="../../../../assets/images/icons/eye.svg" class="img-responsive actions" (click)="openPost('postDetail')">
+            <div class="info-drop">
               <p class="info-text">View</p>
             </div>
           </div>

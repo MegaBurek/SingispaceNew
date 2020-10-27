@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Theme} from '../../../model/theme';
 import {Post} from '../../../model/post';
@@ -13,6 +13,7 @@ import {PagesService} from '../../../services/pages/pages.service';
 import {Page} from '../../../model/page';
 import {Friend} from '../../../model/friend';
 import {FriendsService} from '../../../services/friends/friends.service';
+import {GetUserPageSubs} from '../../../store/user-store/page.actions';
 
 @Component({
   selector: 'app-page-detail',
@@ -24,6 +25,8 @@ export class PageDetailComponent implements OnInit {
   selectedPage: Observable<Page>;
   selectedPageFeed: Observable<Post[]>;
   owner: Friend;
+  page: Page;
+  subscribed: boolean;
 
   public imagePath;
   imageSrc: any;
@@ -52,20 +55,41 @@ export class PageDetailComponent implements OnInit {
     private imgService: ImgService,
     private pagesService: PagesService,
     private authService: AuthService,
-    private friendsService: FriendsService,
     private router: Router
   ) {
-    const name = this.activatedRoute.snapshot.params.pageName;
-    this.selectedPage = this.pagesService.getPageByName(name);
-    this.selectedPageFeed = this.pagesService.getPageFeed(name);
   }
 
   ngOnInit() {
-    this.selectedPage.subscribe((theme) => {
-      this.friendsService.getFriend(theme.owner).subscribe((owner) => {
-        this.owner = owner;
-      });
+    const id = this.activatedRoute.snapshot.params.id;
+    this.selectedPage = this.pagesService.getPageByID(id);
+    this.selectedPageFeed = this.pagesService.getPageFeed(id);
+    this.selectedPage.subscribe((page) => {
+      this.page = page;
+      const uid = this.authService.getCurrentUserID();
+      // @ts-ignore
+      if (this.page.members.includes(uid)) {
+        this.subscribed = true;
+      }
     });
+  }
+
+  subscribeToPage(id) {
+    const uid = this.authService.getCurrentUserID();
+    this.pagesService.subscribe(uid, id).subscribe((response) => {
+      this.subscribed = !this.subscribed;
+      this.store.dispatch(new GetUserPageSubs(uid));
+      this.notify.showSuccess(response, 'Notification');
+    }, error => console.error(error));
+  }
+
+  unsubscribeFromPage(id) {
+    const uid = this.authService.getCurrentUserID();
+    this.pagesService.unsubscribe(uid, id).subscribe((response) => {
+      this.subscribed = !this.subscribed;
+      this.store.dispatch(new GetUserPageSubs(uid));
+      this.notify.showSuccess(response, 'Notification');
+      this.router.navigate(['/home']);
+    }, error => console.error(error));
   }
 
   tryCreatePost() {
@@ -80,9 +104,8 @@ export class PageDetailComponent implements OnInit {
     } else {
       this.post.owner = this.authService.getCurrentUserID();
       if (this.textPost === true) {
-        this.selectedPage.subscribe((page) => {
-          this.postsService.createPagePost(page.id, this.post).subscribe(_ => {
-            this.selectedPageFeed = this.pagesService.getPageFeed(page.name);
+          this.postsService.createPagePost(this.page.id, this.post).subscribe(_ => {
+            this.selectedPageFeed = this.pagesService.getPageFeed(this.page.name);
             this.closeCreatePage('custom-modal-1');
             this.textPost = false;
             this.createPostopen = false;
@@ -90,7 +113,6 @@ export class PageDetailComponent implements OnInit {
           }, error1 => {
             console.error(error1);
           });
-        });
       } else {
         const selectedFileName = this.selectedFile.name;
         const uniqueName = this.makeid(10) + selectedFileName;
@@ -98,9 +120,8 @@ export class PageDetailComponent implements OnInit {
         const newFile = new File([blob], uniqueName);
         this.imgService.uploadPagePhoto(newFile).subscribe((downloadUrl) => {
           this.post.imgContent = downloadUrl;
-          this.selectedPage.subscribe((page) => {
-            this.postsService.createPagePost(page.id, this.post).subscribe(_ => {
-              this.selectedPageFeed = this.pagesService.getPageFeed(page.name);
+          this.postsService.createPagePost(this.page.id, this.post).subscribe(_ => {
+              this.selectedPageFeed = this.pagesService.getPageFeed(this.page.id);
               this.closeCreatePage('custom-modal-1');
               this.imagePost = false;
               this.createPostopen = false;
@@ -108,7 +129,6 @@ export class PageDetailComponent implements OnInit {
             }, error1 => {
               console.error(error1);
             });
-          });
         }, error2 => {
           console.error(error2);
         });
@@ -173,9 +193,5 @@ export class PageDetailComponent implements OnInit {
   openCreateImagePost() {
     this.imagePost = true;
     this.createPostopen = true;
-  }
-
-  toUser(name) {
-    this.router.navigate(['/user/' + name]);
   }
 }

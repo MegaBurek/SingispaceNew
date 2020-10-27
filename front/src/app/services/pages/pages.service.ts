@@ -6,6 +6,8 @@ import {AuthService} from '../auth/auth.service';
 import {catchError, map} from 'rxjs/operators';
 import {Post} from '../../model/post';
 import {Theme} from '../../model/theme';
+import {NotificaitionService} from '../notificaition.service';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,9 @@ export class PagesService {
   private baseUrl = 'http://localhost:8080/pages';
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private notify: NotificaitionService,
+    private router: Router
   ) {
   }
 
@@ -35,8 +39,12 @@ export class PagesService {
     return this.http.get<Page[]>(this.baseUrl + `/user-subscribed` + `/${id}`);
   }
 
-  subscribe(name) {
-    return this.http.post<string>(this.baseUrl + `/subscribe`, name);
+  subscribe(uid, id) {
+    return this.http.post(this.baseUrl + `/subscribe`, {userId: uid, socialGroupId: id}, {responseType: 'text'});
+  }
+
+  unsubscribe(uid, id) {
+    return this.http.post(this.baseUrl + `/unsubscribe`, {userId: uid, socialGroupId: id}, {responseType: 'text'});
   }
 
   getPageByName(name) {
@@ -47,8 +55,8 @@ export class PagesService {
     return this.http.get<Page[]>(this.baseUrl + `/owner` + `/${id}`);
   }
 
-  getPageFeed(name) {
-    return this.http.get<Post[]>(this.baseUrl + `/feed` + `/${name}`);
+  getPageFeed(id) {
+    return this.http.get<Post[]>(this.baseUrl + `/feed` + `/${id}`);
   }
 
   getPageByID(id) {

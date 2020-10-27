@@ -12,6 +12,7 @@ import {Observable} from 'rxjs';
 import {AuthService} from '../../../services/auth/auth.service';
 import {Friend} from '../../../model/friend';
 import {FriendsService} from '../../../services/friends/friends.service';
+import {GetUserThemeSubs} from '../../../store/user-store/theme.action';
 
 @Component({
   selector: 'app-theme-detail',
@@ -23,6 +24,8 @@ export class ThemeDetailComponent implements OnInit {
   selectedTheme: Observable<Theme>;
   selectedThemeFeed: Observable<Post[]>;
   owner: Friend;
+  theme: Theme;
+  subscribed: boolean;
 
   public imagePath;
   imageSrc: any;
@@ -54,12 +57,39 @@ export class ThemeDetailComponent implements OnInit {
     private friendsService: FriendsService,
     private router: Router
   ) {
-    const id = this.activatedRoute.snapshot.params.id;
-    this.selectedTheme = this.themesService.getThemeByID(id);
-    this.selectedThemeFeed = this.themesService.getThemeFeed(id);
+  }
+
+  subscribeToTheme(id) {
+    const uid = this.authService.getCurrentUserID();
+    this.themesService.subscribe(uid, id).subscribe((response) => {
+      this.subscribed = !this.subscribed;
+      this.store.dispatch(new GetUserThemeSubs(uid));
+      this.notify.showSuccess(response, 'Notification');
+    }, error => console.error(error));
+  }
+
+  unsubscribeFromTheme(id) {
+    const uid = this.authService.getCurrentUserID();
+    this.themesService.unsubscribe(uid, id).subscribe((response) => {
+      this.subscribed = !this.subscribed;
+      this.store.dispatch(new GetUserThemeSubs(uid));
+      this.notify.showSuccess(response, 'Notification');
+      this.router.navigate(['/home']);
+    }, error => console.error(error));
   }
 
   ngOnInit() {
+    const id = this.activatedRoute.snapshot.params.id;
+    this.selectedTheme = this.themesService.getThemeByID(id);
+    this.selectedThemeFeed = this.themesService.getThemeFeed(id);
+    this.selectedTheme.subscribe((theme) => {
+      this.theme = theme;
+      const uid = this.authService.getCurrentUserID();
+      // @ts-ignore
+      if (this.theme.members.includes(uid)) {
+        this.subscribed = true;
+      }
+    });
   }
 
   tryCreatePost() {
@@ -94,7 +124,7 @@ export class ThemeDetailComponent implements OnInit {
           this.post.imgContent = downloadUrl;
           this.selectedTheme.subscribe((theme) => {
             this.postsService.createThemePost(theme.id, this.post).subscribe(_ => {
-              this.selectedThemeFeed = this.themesService.getThemeFeed(theme.name);
+              this.selectedThemeFeed = this.themesService.getThemeFeed(theme.id);
               this.closeCreatePage('custom-modal-1');
               this.imagePost = false;
               this.createPostopen = false;
