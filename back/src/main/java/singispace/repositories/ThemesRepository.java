@@ -12,7 +12,6 @@ import java.util.Optional;
 @Repository
 public interface ThemesRepository  extends MongoRepository<Theme, String> {
 
-
 //    @Query("{'name : ?0'}")
     Optional<Theme> findByName(String name);
 

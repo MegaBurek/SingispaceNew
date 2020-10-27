@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import singispace.domain.*;
@@ -54,6 +55,27 @@ public class UserAccService {
 
     public void addUser(User user) {
         userAccRepository.save(user);
+    }
+
+    public String updateUser(String id, User user){
+        Optional<User> found_user = getById(id);
+        String message = "";
+
+        if(found_user.isPresent()){
+            User opt_found_user = found_user.get();
+            opt_found_user.setId(user.getId());
+            opt_found_user.setName(user.getName());
+            opt_found_user.setSurname(user.getSurname());
+            opt_found_user.setEmail(user.getEmail());
+            opt_found_user.setPage_subs(user.getPage_subs());
+            opt_found_user.setTheme_subs(user.getTheme_subs());
+            opt_found_user.setFriends(user.getFriends());
+            userAccRepository.save(opt_found_user);
+            message = "Updated";
+        } else {
+            message = "User Not Found";
+        }
+        return message;
     }
 
     public void removeUserAccData(String id) {

@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import singispace.domain.User;
 import singispace.dto.FriendDTO;
 import singispace.dto.UserViewDTO;
@@ -47,5 +45,10 @@ public class UserController {
             return new ResponseEntity<FriendDTO>(friend.get(), HttpStatus.OK);
         }
         return new ResponseEntity<FriendDTO>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping(value="update/{id}")
+    public ResponseEntity<String> updateUser(@PathVariable String id, @RequestBody User user){
+        return new ResponseEntity<>(userAccService.updateUser(id, user), HttpStatus.OK);
     }
 }

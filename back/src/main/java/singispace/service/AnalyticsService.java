@@ -24,9 +24,6 @@ public class AnalyticsService {
     private PagesRepository pagesRepository;
 
     @Autowired
-    private UserAccRepository userAccRepository;
-
-    @Autowired
     private MongoTemplate mongoTemplate;
 
     public Number countAllThemeRecords() {
